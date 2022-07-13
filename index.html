@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Stopwatch</title>
+</head>
+<body>
+    <div class="clock-container">
+        <div class ="counter-container" id="mycount">0:0:0</div>
+        <div class="button-container">
+            <button type="submit" onclick="start()">START</button>
+            <button type="submit" onclick="stop()" id="stp">STOP</button>
+            <button type="submit" onclick="resume()" id="res">RESUME</button>
+            <button type="submit" onclick="clear()" id="clr">CLEAR</button>
+        </div> 
+    </div>
+
+    <script>
+        var sec = 0;
+        var hr = 0;
+        var min = 0;
+        var myInterval = "";
+        function start(){
+            myInterval=setInterval(clock_start,1000);
+        }
+
+        function clock_start(){
+            document.getElementById("clr").onclick=()=>{clear();};
+            document.getElementById("res").onclick=()=>{resume();};
+            document.getElementById("stp").onclick=()=>{stop();};
+
+                sec = sec+1;
+                if(sec>59){
+                    sec = 0;
+                    min=min+1;
+
+                    if(min>59){
+                        min = 0;
+                        hr = hr+1;
+
+                        if(hr>11){
+                            hr = 0;
+                        }
+                    }
+                }
+                //printing the changes in the time display
+                document.getElementById("mycount").innerHTML = hr+":"+min+":"+sec;
+
+                //function stop()
+                function stop(){
+                    clearInterval(myInterval);
+                }
+
+                //function resume()
+                function resume(){
+                    myInterval=setInterval(clock_start,1000);
+                }
+
+                //function clear()
+                function clear(){
+                    clearInterval(myInterval);
+                    hr=sec=min=0;
+
+                    //have to change the time display to 0:0:0
+                    document.getElementById("mycount").innerHTML= hr+":"+min+":"+sec;
+                }
+        }
+       
+    </script>
+</body>
+</html>
